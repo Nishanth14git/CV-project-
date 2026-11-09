@@ -1,29 +1,32 @@
 # MATLAB implementation
 
 ## Main script
+`speed_limit_sign_detection.m` contains the submitted MATLAB implementation.
 
-`speed_limit_sign_detection.m` contains the supplied speed-limit sign detection pipeline.
+## Input image
+The original script reads `road.png` from MATLAB's current working folder:
 
-### Input
+```matlab
+I = imread('road.png');
+```
 
-The original script reads `road.png` from the current MATLAB working folder. Place your original colour road image there, or edit the filename in the script.
+Place the input image in the current folder before running the script, or update this line to the correct path. The actual road image file was not included in the supplied attachments; the original-image screenshot is stored in the results section.
 
-### Pipeline
+## Implemented operations
+- RGB thresholding and HSV thresholding comparison.
+- Morphological opening and closing with a disk structuring element.
+- Connected-component analysis.
+- Area, bounding-box, width, height and aspect-ratio filtering.
+- Green bounding-box visualisation.
+- Canny edge detection on a grayscale image.
 
-1. Load and convert the image to double precision.
-2. Extract RGB channels.
-3. Create RGB and HSV red masks.
-4. Compare the masks; the author selected RGB for the demonstrated image.
-5. Clean the RGB mask using morphological opening and closing.
-6. Find connected components.
-7. Measure component area and bounding box.
-8. Derive width, height and aspect ratio and draw green boxes for candidates that meet the chosen thresholds.
-9. Convert to grayscale and apply Canny edge detection.
+## Thresholds used in the submitted example
+- RGB: `R > 0.4`, `R > 1.3*G`, `R > 1.3*B`.
+- HSV: red hue near either end of the hue range, `S > 0.4`, `V > 0.2`.
+- Morphology: disk structuring element with radius 3.
+- Candidate: area > 1000, width > 30, height > 30, aspect ratio between 0.85 and 1.2.
 
-### First exploration script
+These are the user's selected experimental values for the supplied image, not universal thresholds.
 
-`01_image_exploration.m` is an initial RGB channel exploration exercise. The more complete supplied implementation is in `speed_limit_sign_detection.m`.
-
-### Important
-
-The script preserves the author's selected thresholds and candidate conditions. These are image-specific starting values and should be retested on additional photographs. OCR is not included in this version.
+## Scope
+OCR is not included in this script. It was specified as an optional bonus.
