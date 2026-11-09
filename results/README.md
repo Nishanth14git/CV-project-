@@ -1,20 +1,25 @@
 # MATLAB results
 
-The following screenshots were supplied from the user's MATLAB run on 25 October 2026.
+## Evidence received
 
-## Original image
-![Original road image](original-road-image.jpg)
+The following five MATLAB screenshots were supplied by the project author for the road image containing a speed-limit sign displaying **80**:
 
-## RGB red mask
-![RGB red mask](rgb-red-mask.jpg)
+| Suggested filename | Evidence |
+|---|---|
+| `original-road-image.png` | Original road photograph shown in MATLAB |
+| `rgb-red-mask.png` | RGB threshold mask showing the red sign border |
+| `hsv-red-mask.png` | HSV red mask comparison |
+| `canny-edge-detection.png` | Canny edge output showing sign contours and scene edges |
+| `final-detection.png` | Final result with a green bounding box around the sign |
 
-## HSV red mask
-![HSV red mask](hsv-red-mask.jpg)
+## Main observation
 
-## Canny edge detection
-![Canny edge detection](canny-edge-detection.jpg)
+The final screenshot demonstrates a bounding box around the sign in the supplied example. The RGB-versus-HSV comparison and selected thresholds are described in [the comparison notes](../documentation/rgb-vs-hsv-comparison.md).
 
-## Final speed-limit sign detection
-![Final bounding-box detection](final-detection.jpg)
+## Screenshot files
 
-The final detection screenshot shows a green bounding box around the speed-limit sign displaying 80. The masks and Canny result are the user's captured MATLAB outputs. They are presented as example-specific evidence, not as a benchmark or accuracy evaluation.
+The screenshots were supplied in the conversation but have not yet been committed as binary image files in this repository. Add the five image files here using the filenames in the table above so this evidence page can display them.
+
+Once added, the images can be embedded here with relative Markdown image links.
+
+These are example-specific screenshots, not a benchmark or accuracy evaluation.
