@@ -1,28 +1,27 @@
-# Limitations and test cases
+# Limitations and future testing
 
-## Limitations observed or implied by the current approach
+## Limitations identified in the project notes
 
-1. **Colour dependence:** RGB and HSV thresholding depend on colour values and threshold choices. Lighting and camera conditions can change the apparent red values.
-2. **Red-object confusion:** the pipeline detects red-looking regions, not the semantic meaning of a traffic sign. Other red objects may become candidates.
-3. **Geometry dependence:** area, width, height and aspect-ratio rules can reject signs that are small, distant, tilted or partly occluded.
-4. **Canny output:** the demonstrated Canny result contains many road and vegetation edges in addition to the sign boundary.
-5. **Single demonstrated example:** the supplied screenshots demonstrate one road photograph. They do not establish performance across a wider dataset.
+- The detector relies mainly on colour and geometric properties.
+- Other red objects may satisfy the same conditions and be incorrectly detected.
+- Lighting changes may affect the colour thresholds.
+- Distance and viewing angle may affect the result.
 
-## Suggested validation still to perform
+## What the supplied example demonstrates
 
-- [ ] Far-away or small speed-limit signs.
-- [ ] Signs viewed at different angles.
-- [ ] Multiple speed-limit signs in one image.
-- [ ] Images containing no speed-limit sign.
-- [ ] Other red objects that could confuse the detector.
-- [ ] Different lighting and background conditions.
+The submitted screenshot shows one successful bounding-box detection around a red-bordered sign displaying 80. The Canny result also contains many edges from vegetation, the road and other objects in the scene, not only the sign.
 
-## Optional extension
+## Tests still worth doing
 
-- [ ] Crop the detected sign and test MATLAB OCR.
+The assignment suggests testing:
+- Signs that are far away.
+- Signs viewed at different angles.
+- Images containing multiple speed-limit signs.
+- Images without a speed-limit sign.
+- Images containing other red objects.
 
-The number "80" is visible in the supplied example image, but OCR recognition is not present in the supplied code or results.
+The repository currently contains evidence for the supplied example only. Results for these additional cases should be added only after they are run.
 
-## Failure analysis log
+## OCR scope
 
-Add each tested image, its output screenshot, what the detector selected, and a reasoned explanation. Do not record hypothetical cases as observed failures.
+The project brief describes OCR as a bonus. The supplied script does not contain an OCR step, so OCR remains an optional future extension.
