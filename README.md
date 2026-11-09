@@ -1,98 +1,56 @@
-# CV-project-
-# 🚦 Speed Limit Sign Detection using MATLAB
+# Speed Limit Sign Detection using MATLAB
 
-## 📌 Project Overview
+A learning-focused Computer Vision mini-project that detects likely red speed-limit signs in road photographs using MATLAB.
 
-This project focuses on developing a Speed Limit Sign Detection System using MATLAB and fundamental Computer Vision techniques.
+## Objective
+Given a road image, identify a likely speed-limit sign, highlight the candidate with a bounding box, and optionally read the displayed speed value using MATLAB OCR.
 
-The objective is to analyse a road image, identify red speed-limit signs, highlight the detected sign using a bounding box and optionally recognise the speed limit displayed on the sign.
+## Required workflow
+1. Load and explore a road image; inspect its RGB colour channels.
+2. Experiment with RGB and HSV colour spaces to create a mask for red regions.
+3. Clean the mask using image-processing and morphological operations.
+4. Use connected components and region properties (area, width and height) to identify a suitable candidate.
+5. Draw a bounding box around the candidate.
+6. Apply Canny edge detection and inspect the boundaries.
+7. **Bonus:** crop the candidate and experiment with MATLAB OCR to read the speed value.
 
-This project is part of my Computer Vision learning journey as a first-year Robotics and AI engineering student.
+## Required submission
+- MATLAB script.
+- Screenshots of the original image, thresholded mask, cleaned mask and final detection.
+- A short explanation of the methods tried and which worked best.
+- A successful detection example and, if possible, a failure example.
 
-## 🎯 Objectives
+## Suggested challenge tests
+Try distant signs, angled signs, multiple signs, images without speed-limit signs and images containing other red objects that could confuse the detector.
 
-- Load and explore road images.
-- Analyse RGB colour channels.
-- Detect red regions using RGB and HSV colour spaces.
-- Apply image-processing and morphological operations.
-- Identify candidate regions using connected components.
-- Extract region properties such as area, width and height.
-- Draw bounding boxes around detected signs.
-- Explore Canny edge detection.
-- Experiment with MATLAB OCR for speed-number recognition.
-
-## 🛠️ Technologies Used
-
-- MATLAB
-- Image Processing Toolbox
-- MATLAB OCR functionality (optional)
-
-## ⚙️ Project Workflow
-
-1. Image acquisition and RGB channel exploration.
-2. Red-region segmentation using RGB and HSV.
-3. Binary mask generation.
-4. Noise removal and morphological processing.
-5. Connected component analysis.
-6. Candidate selection using region properties.
-7. Bounding-box visualisation.
-8. Canny edge detection.
-9. Optional OCR-based number recognition.
-
-## 📂 Repository Structure
-
+## Repository map
 ```text
-CV-project/
-│
+CV-project-/
 ├── README.md
-│
+├── project-requirements/
+│   └── project-brief.md
 ├── MATLAB/
-│   └── Detection.m
-│
+│   ├── README.md
+│   └── 01_image_exploration.m
 ├── images/
-│
+│   ├── input/
+│   └── test/
 ├── results/
-│
+│   ├── masks/
+│   └── detections/
 ├── documentation/
-│
+│   ├── methodology.md
+│   └── limitations.md
 └── progress/
+    └── learning-progress.md
 ```
 
-## 🧪 Testing Scenarios
+## Tools
+- MATLAB
+- MATLAB image-processing and morphology functions available in the installed environment
+- MATLAB OCR functionality for the optional bonus
 
-The system will be evaluated using:
+## Development status
+**Stage 0 — repository and requirement setup.** The first image-exploration exercise is provided as a starter script. The detection pipeline, threshold choices, screenshots and test results will be added and verified in stages. No detection accuracy or successful testing is claimed yet.
 
-- Speed-limit signs at different distances.
-- Signs viewed at different angles.
-- Images containing multiple signs.
-- Images without speed-limit signs.
-- Images containing other red objects.
-
-## 📊 Expected Results
-
-The project aims to produce:
-
-- Original road image.
-- RGB channel visualisation.
-- Red-region threshold mask.
-- Cleaned binary mask.
-- Detected sign with bounding box.
-- Canny edge detection output.
-- Optional OCR result.
-
-## 📚 Learning Approach
-
-The project will be developed incrementally, focusing on understanding each Computer Vision technique, experimenting with different approaches and analysing both successful and unsuccessful detections.
-
-## 📌 Project Status
-
-🚧 Initial setup and requirement analysis.
-
-Implementation and testing will be added progressively.
-
----
-
-**Project:** Speed Limit Sign Detection  
-**Domain:** Computer Vision  
-**Platform:** MATLAB  
-**Field:** Robotics and Artificial Intelligence
+The aim is to understand each method, compare experiments and document where the approach works and fails.
