@@ -1,25 +1,25 @@
 # MATLAB results
 
-## Evidence received
+The screenshots below were captured from the author's MATLAB run on the supplied road photograph. The sign displays **80**.
 
-The following five MATLAB screenshots were supplied by the project author for the road image containing a speed-limit sign displaying **80**:
+## Original road image
 
-| Suggested filename | Evidence |
-|---|---|
-| `original-road-image.png` | Original road photograph shown in MATLAB |
-| `rgb-red-mask.png` | RGB threshold mask showing the red sign border |
-| `hsv-red-mask.png` | HSV red mask comparison |
-| `canny-edge-detection.png` | Canny edge output showing sign contours and scene edges |
-| `final-detection.png` | Final result with a green bounding box around the sign |
+![Original road image](../images/input/original-road-image.jpg)
 
-## Main observation
+## RGB red mask
 
-The final screenshot demonstrates a bounding box around the sign in the supplied example. The RGB-versus-HSV comparison and selected thresholds are described in [the comparison notes](../documentation/rgb-vs-hsv-comparison.md).
+![RGB red mask](masks/rgb-red-mask.jpg)
 
-## Screenshot files
+## HSV red mask
 
-The screenshots were supplied in the conversation but have not yet been committed as binary image files in this repository. Add the five image files here using the filenames in the table above so this evidence page can display them.
+![HSV red mask](masks/hsv-red-mask.jpg)
 
-Once added, the images can be embedded here with relative Markdown image links.
+## Canny edge detection
 
-These are example-specific screenshots, not a benchmark or accuracy evaluation.
+![Canny edge detection](detections/canny-edge-detection.jpg)
+
+## Final speed-limit sign detection
+
+![Final bounding-box detection](detections/final-detection.jpg)
+
+The final detection screenshot shows a green bounding box around the sign. The author's notes report that RGB produced the clearer mask for this image and selected thresholds. These are example-specific outputs, not a benchmark or an accuracy evaluation.
