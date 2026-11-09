@@ -1,37 +1,36 @@
 # Speed Limit Sign Detection using MATLAB
 
-A learning-focused Computer Vision mini-project that detects likely red speed-limit signs in road photographs using MATLAB.
+A MATLAB Computer Vision mini-project that detects the red border of a speed-limit sign in a road photograph and highlights a candidate with a bounding box.
 
-## Objective
-Given a road image, identify a likely speed-limit sign, highlight the candidate with a bounding box, and optionally read the displayed speed value using MATLAB OCR.
+**Demonstrated sample:** a road photograph containing a red-bordered **80** speed-limit sign.
 
-## Required workflow
-1. Load and explore a road image; inspect its RGB colour channels.
-2. Experiment with RGB and HSV colour spaces to create a mask for red regions.
-3. Clean the mask using image-processing and morphological operations.
-4. Use connected components and region properties (area, width and height) to identify a suitable candidate.
-5. Draw a bounding box around the candidate.
-6. Apply Canny edge detection and inspect the boundaries.
-7. **Bonus:** crop the candidate and experiment with MATLAB OCR to read the speed value.
+## Project status
 
-## Required submission
-- MATLAB script.
-- Screenshots of the original image, thresholded mask, cleaned mask and final detection.
-- A short explanation of the methods tried and which worked best.
-- A successful detection example and, if possible, a failure example.
+The core image-processing pipeline has been implemented by the project author and demonstrated in the supplied MATLAB screenshots. RGB and HSV colour masks were compared; RGB was selected for the main pipeline on the tested image because it produced a clearer red-border mask with fewer unwanted white regions.
 
-## Suggested challenge tests
-Try distant signs, angled signs, multiple signs, images without speed-limit signs and images containing other red objects that could confuse the detector.
+The screenshots show the original image, RGB mask, HSV mask, Canny edges and a final green bounding box around the sign candidate.
 
-## Repository map
+## Implemented workflow
+
+1. Load `road.png` and convert it to double precision using `im2double`.
+2. Extract the R, G and B channels.
+3. Create an RGB red mask using a red intensity threshold and comparisons against green and blue.
+4. Create an HSV red mask for comparison.
+5. Clean the RGB mask using morphological opening and closing with a disk structuring element.
+6. Detect connected components using `bwconncomp`.
+7. Measure area and bounding boxes using `regionprops`; derive width, height and aspect ratio.
+8. Draw a green rectangle around candidate regions meeting the selected conditions.
+9. Convert the input to grayscale and apply Canny edge detection.
+
+## Repository structure
+
 ```text
 CV-project-/
 ├── README.md
-├── project-requirements/
-│   └── project-brief.md
 ├── MATLAB/
 │   ├── README.md
-│   └── 01_image_exploration.m
+│   ├── 01_image_exploration.m
+│   └── speed_limit_sign_detection.m
 ├── images/
 │   ├── input/
 │   └── test/
@@ -41,16 +40,34 @@ CV-project-/
 ├── documentation/
 │   ├── methodology.md
 │   └── limitations.md
+├── project-requirements/
+│   └── project-brief.md
 └── progress/
     └── learning-progress.md
 ```
 
-## Tools
-- MATLAB
-- MATLAB image-processing and morphology functions available in the installed environment
-- MATLAB OCR functionality for the optional bonus
+## Run the MATLAB script
 
-## Development status
-**Stage 0 — repository and requirement setup.** The first image-exploration exercise is provided as a starter script. The detection pipeline, threshold choices, screenshots and test results will be added and verified in stages. No detection accuracy or successful testing is claimed yet.
+1. Open the repository folder in MATLAB.
+2. Place the original colour road photograph in the project root and name it `road.png` (or update the filename in the script).
+3. Run `MATLAB/speed_limit_sign_detection.m`.
 
-The aim is to understand each method, compare experiments and document where the approach works and fails.
+The script uses MATLAB image-processing functions such as `imread`, `im2double`, `rgb2hsv`, `strel`, `imopen`, `imclose`, `bwconncomp`, `regionprops` and `edge`. The required toolbox availability depends on the MATLAB installation.
+
+## Demonstrated results
+
+See the screenshots in `results/masks/` and `results/detections/`. The original-image screenshot is stored under `images/input/`.
+
+## Scope and limitations
+
+- The RGB thresholds and geometric limits were selected for the demonstrated image; they are not universal values.
+- The approach is based on colour and region geometry, not semantic sign understanding.
+- Other red objects may produce false candidates.
+- Lighting, distance and viewing angle may affect segmentation and candidate selection.
+- Canny detects many scene boundaries, not only the sign.
+- OCR has **not** been implemented in the supplied script; it remains an optional extension.
+- Broader testing with distant, angled, multiple-sign and no-sign images remains to be documented.
+
+## Learning and attribution
+
+This repository records the author's implementation, experiments and screenshots. The code and parameters are preserved as supplied, with project documentation organised around the demonstrated work.
