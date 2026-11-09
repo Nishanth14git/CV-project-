@@ -1,9 +1,21 @@
 % Speed Limit Sign Detection using MATLAB
-% This file preserves the implementation supplied by the project author.
-% Input: road.png in the current MATLAB working folder.
+% Repository-ready version based on the author's submitted implementation.
+% Reads the supplied example image from images/input.
 
-% 1. Load the original road image
-I = imread('road.png');
+clear;
+clc;
+close all;
+
+% 1. Locate and load the original road image
+scriptFolder = fileparts(mfilename('fullpath'));
+projectRoot = fileparts(scriptFolder);
+imagePath = fullfile(projectRoot, 'images', 'input', 'original-road-image.jpg');
+
+if ~isfile(imagePath)
+    error('Input image not found: %s', imagePath);
+end
+
+I = imread(imagePath);
 I = im2double(I);
 
 % 2. Extract RGB channels
@@ -23,7 +35,6 @@ title('RGB Red Mask');
 
 % HSV mask — comparison
 hsvImage = rgb2hsv(I);
-
 H = hsvImage(:,:,1);
 S = hsvImage(:,:,2);
 V = hsvImage(:,:,3);
@@ -58,7 +69,6 @@ imshow(I);
 hold on;
 
 for k = 1:CC.NumObjects
-
     area = stats(k).Area;
     box = stats(k).BoundingBox;
 
