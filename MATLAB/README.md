@@ -1,20 +1,29 @@
 # MATLAB implementation
 
-This folder contains the MATLAB scripts developed for the project.
+## Main script
 
-## Development order
-1. `01_image_exploration.m` — load one road photograph, display it and inspect its RGB channels.
-2. RGB red-region segmentation.
-3. HSV red-region segmentation and comparison.
-4. Mask cleanup and morphological experiments.
-5. Connected-component measurements and candidate selection.
-6. Bounding-box visualisation.
-7. Canny edge exploration.
-8. Optional OCR on a crop of a detected sign.
+`speed_limit_sign_detection.m` contains the supplied speed-limit sign detection pipeline.
 
-## Run the first exercise
-1. Put a suitable colour road photograph in `images/input/`.
-2. Name it `road_image.jpg`, or update the filename in the script.
-3. Run `01_image_exploration.m` from this folder.
+### Input
 
-The script is only the first learning stage. The complete detection pipeline has not been implemented yet.
+The original script reads `road.png` from the current MATLAB working folder. Place your original colour road image there, or edit the filename in the script.
+
+### Pipeline
+
+1. Load and convert the image to double precision.
+2. Extract RGB channels.
+3. Create RGB and HSV red masks.
+4. Compare the masks; the author selected RGB for the demonstrated image.
+5. Clean the RGB mask using morphological opening and closing.
+6. Find connected components.
+7. Measure component area and bounding box.
+8. Derive width, height and aspect ratio and draw green boxes for candidates that meet the chosen thresholds.
+9. Convert to grayscale and apply Canny edge detection.
+
+### First exploration script
+
+`01_image_exploration.m` is an initial RGB channel exploration exercise. The more complete supplied implementation is in `speed_limit_sign_detection.m`.
+
+### Important
+
+The script preserves the author's selected thresholds and candidate conditions. These are image-specific starting values and should be retested on additional photographs. OCR is not included in this version.
