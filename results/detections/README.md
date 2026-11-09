@@ -1,8 +1,8 @@
 # Detection and edge results
 
-The supplied MATLAB screenshots are stored in this folder:
+Upload these corrected PNG screenshots from the image-corrections bundle:
 
-- `canny-edge-detection.jpg` — Canny output showing edges across the full road scene, including the sign.
-- `final-detection.jpg` — final road image with a green bounding box around the speed-limit sign.
+- `canny-edge-detection.png` — Canny output showing boundaries across the full road scene, including the sign.
+- `final-detection.png` — final image with a green bounding box around the speed-limit sign.
 
-The demonstrated input sign displays **80**. This value is visually visible in the image; the current MATLAB script does not run OCR.
+The demonstrated sign displays **80**. This value is visible in the supplied image; the current MATLAB script does not perform OCR.
