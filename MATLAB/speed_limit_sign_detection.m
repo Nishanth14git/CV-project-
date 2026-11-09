@@ -18,22 +18,38 @@ end
 I = imread(imagePath);
 I = im2double(I);
 
-% 2. Extract RGB channels
+% 2. Extract and display the RGB channels
 R = I(:,:,1);
 G = I(:,:,2);
 B = I(:,:,3);
 
-% 3. Create the RGB red mask and HSV mask
+figure('Name', 'RGB Channel Exploration');
+subplot(2,2,1);
+imshow(I);
+title('Original RGB Image');
+
+subplot(2,2,2);
+imshow(R);
+title('Red Channel');
+
+subplot(2,2,3);
+imshow(G);
+title('Green Channel');
+
+subplot(2,2,4);
+imshow(B);
+title('Blue Channel');
+
+% 3. Create the RGB red mask
 redMask = R > 0.4 & ...
     R > 1.3*G & ...
     R > 1.3*B;
 
-% Display the RGB red mask
-figure;
+figure('Name', 'RGB Red Mask');
 imshow(redMask);
 title('RGB Red Mask');
 
-% HSV mask — comparison
+% 4. Create an HSV mask for comparison
 hsvImage = rgb2hsv(I);
 H = hsvImage(:,:,1);
 S = hsvImage(:,:,2);
@@ -43,7 +59,7 @@ hsvMask = (H < 0.05 | H > 0.95) & ...
     (S > 0.4) & ...
     (V > 0.2);
 
-figure;
+figure('Name', 'RGB and HSV Mask Comparison');
 subplot(1,2,1);
 imshow(redMask);
 title('RGB Mask');
@@ -52,19 +68,23 @@ subplot(1,2,2);
 imshow(hsvMask);
 title('HSV Mask');
 
-% 4. Clean the RGB mask (selected as better for the tested image)
+% 5. Clean the RGB mask (selected as better for the tested image)
 se = strel('disk', 3);
 cleanMask = imopen(redMask, se);
 cleanMask = imclose(cleanMask, se);
 
-% 5. Find connected components
+figure('Name', 'Cleaned RGB Mask');
+imshow(cleanMask);
+title('Cleaned RGB Mask');
+
+% 6. Find connected components
 CC = bwconncomp(cleanMask);
 
-% 6. Measure each region
+% 7. Measure each region
 stats = regionprops(CC, 'Area', 'BoundingBox');
 
-% 7. Draw bounding boxes around suitable candidates
-figure;
+% 8. Draw bounding boxes around suitable candidates
+figure('Name', 'Speed Limit Sign Detection');
 imshow(I);
 hold on;
 
@@ -91,11 +111,11 @@ end
 
 hold off;
 
-% 8. Apply Canny edge detection
+% 9. Apply Canny edge detection
 grayImage = rgb2gray(I);
 edges = edge(grayImage, 'Canny');
 
-figure;
+figure('Name', 'Canny Edge Detection');
 subplot(1,2,1);
 imshow(I);
 title('Original Road Image');
