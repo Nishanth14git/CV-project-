@@ -1,28 +1,24 @@
-# Methodology and experiment results
+# Methodology and implementation details
 
-This document records the methods used in the supplied MATLAB implementation and the observations visible in the submitted screenshots.
+This document records the workflow in the submitted MATLAB script and the observations from the supplied road photograph.
 
-## 1. Image loading and RGB exploration
+## 1. Image loading and exploration
 
-The road image is loaded using `imread('road.png')` and converted to double precision using `im2double`. The red, green and blue channels are extracted using array indexing.
+The road image is loaded using `imread()` and converted using `im2double()`. The RGB channels are separated as `R`, `G` and `B` for colour analysis.
 
-## 2. Red-region detection: RGB and HSV comparison
+## 2. RGB red-region segmentation
 
-### RGB method
-
-The red mask is created using the conditions:
+The script creates the binary mask using:
 
 ```matlab
-redMask = R > 0.4 & ...
-    R > 1.3*G & ...
-    R > 1.3*B;
+redMask = R > 0.4 & R > 1.3*G & R > 1.3*B;
 ```
 
-This selects pixels where the red channel is above 0.4 and sufficiently stronger than both green and blue.
+This requires the red channel to be above 0.4 and stronger than both the green and blue channels by the selected ratio.
 
-### HSV method
+## 3. HSV comparison
 
-The image is converted using `rgb2hsv`. The mask uses hue near either end of the hue interval, together with saturation and value thresholds:
+The image is converted using `rgb2hsv()`. The HSV mask is:
 
 ```matlab
 hsvMask = (H < 0.05 | H > 0.95) & ...
@@ -30,43 +26,47 @@ hsvMask = (H < 0.05 | H > 0.95) & ...
     (V > 0.2);
 ```
 
-### Observed comparison
+The low- and high-hue ranges cover red near the hue wrap-around. The submitted comparison notes state that RGB produced the clearer result on the selected image and reduced more unwanted white noise.
 
-Both colour spaces were tested. For the selected road image and chosen thresholds, the RGB mask gave a clearer representation of the red sign border and removed more unwanted white noise. RGB was therefore selected for the main detection pipeline. The screenshots show that both masks isolate the circular red border, with a small residual foreground speck visible in the displayed masks.
+## 4. Morphological cleanup
 
-This conclusion is specific to the tested image and thresholds; it does not establish that RGB is always better than HSV.
+The script creates a disk structuring element with radius 3:
 
-## 3. Morphological operations
+```matlab
+se = strel('disk', 3);
+cleanMask = imopen(redMask, se);
+cleanMask = imclose(cleanMask, se);
+```
 
-A disk structuring element of radius 3 is created using `strel('disk', 3)`. Morphological opening (`imopen`) is applied first, followed by closing (`imclose`).
+Opening is used to remove small foreground noise; closing is used to close small gaps in the foreground region.
 
-The stated purpose is to remove small unwanted regions and fill small gaps or connect nearby pixels.
+## 5. Connected components and candidate measurements
 
-## 4. Connected components and region properties
+The cleaned mask is labelled using `bwconncomp()`. `regionprops()` measures `Area` and `BoundingBox`. Width and height are read from the bounding box, and the aspect ratio is calculated as width divided by height.
 
-The cleaned mask is passed to `bwconncomp`. `regionprops` measures each component's `Area` and `BoundingBox`.
+The script accepts regions satisfying all the following conditions:
 
-The script derives:
-- Width from the third bounding-box element.
-- Height from the fourth bounding-box element.
-- Aspect ratio as width divided by height.
-
-## 5. Candidate selection and bounding box
-
-A candidate is drawn when it satisfies all the implemented conditions:
 - Area greater than 1000 pixels.
 - Width greater than 30 pixels.
 - Height greater than 30 pixels.
 - Aspect ratio greater than 0.85 and less than 1.2.
 
-The `rectangle` function draws the candidate box in green with line width 2. The supplied final screenshot shows a green bounding box around the red-bordered 80 sign.
+These are the thresholds used in the submitted example; they are not universal values for every image.
 
-## 6. Canny edge detection
+## 6. Bounding-box visualisation
 
-The RGB image is converted to grayscale using `rgb2gray`, then Canny edges are calculated using `edge(grayImage, 'Canny')`.
+For each candidate satisfying the conditions, `rectangle()` draws a green bounding box on the original image.
 
-The supplied edge screenshot shows the sign's circular boundary and the digits, along with many edges from the road, vegetation and other scene details. Canny reveals boundaries but does not independently identify which boundary is a speed-limit sign.
+## 7. Canny edge detection
 
-## 7. Optional OCR
+The image is converted to grayscale using `rgb2gray()`, then processed using:
 
-The supplied MATLAB script does not include OCR. The displayed sign contains the number 80, but the submitted materials do not demonstrate an OCR result. OCR remains a bonus extension.
+```matlab
+edges = edge(grayImage, 'Canny');
+```
+
+The supplied edge screenshot shows the sign boundary and digit contours, as well as edges from vegetation, road features and other scene content.
+
+## 8. OCR
+
+OCR was a bonus challenge in the assignment. The submitted MATLAB script does not implement OCR, so number recognition is not claimed as a completed software feature. The speed value 80 is visible in the supplied original photograph.
