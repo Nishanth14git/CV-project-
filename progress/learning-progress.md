@@ -1,27 +1,42 @@
 # Project progress
 
-## Overall objective
-Build and understand a MATLAB system that detects likely red speed-limit signs in road images and draws a bounding box around a candidate. OCR is optional.
+## Project objective
 
-## Milestones
-- [x] Read the supplied project brief and record its objective, tasks, outputs and submission checklist.
-- [x] Create the repository documentation structure.
-- [ ] Add a road image and run RGB-channel exploration.
-- [ ] Complete and review RGB red segmentation.
-- [ ] Complete and review HSV red segmentation.
-- [ ] Compare RGB and HSV masks.
-- [ ] Clean the selected mask using morphological operations.
-- [ ] Inspect connected components and region properties.
-- [ ] Select a sign candidate and draw its bounding box.
-- [ ] Explore Canny edge detection.
-- [ ] Capture required screenshots.
-- [ ] Test distant, angled, multiple-sign, no-sign and confusing-red-object cases.
-- [ ] Document one successful result and, if possible, a failure.
-- [ ] Optional: test OCR on a detected sign crop.
-- [ ] Prepare the final explanation and viva revision.
+Detect a speed-limit sign in a road photograph using MATLAB, highlight the candidate with a bounding box and optionally read the speed value using OCR.
 
-## Current stage
-**Stage 1 — image exploration.** The starter script is provided. It has not been executed in the user's MATLAB environment.
+## Completed implementation stages
+
+- [x] Load the road image using `imread`.
+- [x] Convert the image using `im2double`.
+- [x] Extract RGB channels.
+- [x] Create an RGB red mask using channel thresholds.
+- [x] Create an HSV red mask for comparison.
+- [x] Compare RGB and HSV masks on the supplied image.
+- [x] Select RGB for the main pipeline on the demonstrated image based on the clearer mask and lower unwanted white noise.
+- [x] Apply morphological opening and closing with a disk structuring element.
+- [x] Find connected components using `bwconncomp`.
+- [x] Measure area and bounding box using `regionprops`.
+- [x] Derive width, height and aspect ratio for candidate selection.
+- [x] Draw a green bounding box around the demonstrated speed-limit sign.
+- [x] Apply Canny edge detection.
+- [x] Record methodology and limitations.
+- [x] Capture screenshots of the original image, RGB mask, HSV mask, Canny edges and final detection.
+
+## Remaining work
+
+- [ ] Test on distant or small signs.
+- [ ] Test signs at different angles.
+- [ ] Test images with multiple signs.
+- [ ] Test images with no speed-limit signs.
+- [ ] Test images containing other red objects.
+- [ ] Record a successful and, if possible, a failure example from additional images.
+- [ ] Optional: crop the detected sign and test MATLAB OCR.
+- [ ] Prepare final submission explanation and viva questions.
+
+## Current status
+
+**Core pipeline implemented and demonstrated on one supplied road image.** The screenshots were supplied by the project author. The repository upload does not independently execute MATLAB, so the script has not been run or verified in this environment.
 
 ## Verification rule
-A task is marked complete only after the user runs it in MATLAB and the output has been reviewed. Uploading a script does not mean the script has been tested.
+
+A task is marked complete when supported by the supplied code and/or actual output screenshots. Broader test cases and OCR remain pending until performed.
